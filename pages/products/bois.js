@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import { getJouets } from '../../lib/airtable';
-// import { getStripe } from '../../utils/get-stripe';
+import { getStripe } from '../../utils/get-stripe';
 
 import s from './bois.module.css';
 
@@ -16,44 +16,44 @@ export const getStaticProps = async (context) => {
     }
 }
 
-// const StripeButton = (props) => {
-//     const [working, setWorking] = useState(false);
+const StripeButton = (props) => {
+    const [working, setWorking] = useState(false);
 
-//     const handleClick = async(e) => {
-//         e.preventDefault()
-//         const stripe = await getStripe();
+    const handleClick = async(e) => {
+        e.preventDefault()
+        const stripe = await getStripe();
 
-//         // stripe library has been downloaded
-//         setWorking(true)
+        // stripe library has been downloaded
+        setWorking(true)
 
-//         const session = await fetch('/api/create-checkout-session', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify({
-//                     product: props.produit,
-//                     price: props.prix
-//                 })
-//             })
-//             .then(res => res.json())
+        const session = await fetch('/api/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    product: props.produit,
+                    price: props.prix
+                })
+            })
+            .then(res => res.json())
 
-//         await stripe.redirectToCheckout({
-//             sessionId: session.id
-//         })
+        await stripe.redirectToCheckout({
+            sessionId: session.id
+        })
 
-//         setWorking(false)
-//     }
+        setWorking(false)
+    }
 
-//     return ( 
-//         <button type = 'button'
-//         className = 'p-2 -m-2'
-//         onClick = { handleClick }
-//         disabled = { working }> { working ? 'Connecting' : `Buy for ${props.prix}` } 
-//         </button>
-//     )
+    return ( 
+        <button type = 'button'
+        className = 'p-2 -m-2'
+        onClick = { handleClick }
+        disabled = { working }> { working ? 'Connecting' : `Buy for ${props.prix}` } 
+        </button>
+    )
 
-// }
+}
 
 export default function Bois({ bois }) {
     return ( 
@@ -75,8 +75,8 @@ export default function Bois({ bois }) {
                         <h2 className='w-full text-xl'>{ p.jouet }</h2> 
                         <span className='w-full flex justify-around items-center'>
                             <h2 className='text-xl'>{ `${p.prix}` }</h2> 
-                            <button className='p-2 my-2 rounded-lg bg-white text-xl font-bold text-blue-900'>Acheter</button>
-                            {/* <StripeButton produit={p.jouet} prix={ p.prix }/> */}
+                            {/* <button className='p-2 my-2 rounded-lg bg-white text-xl font-bold text-blue-900'>Acheter</button> */}
+                            <StripeButton produit={p.jouet} prix={ p.prix }/>
                         </span> 
                         <picture>
                             <source srcSet = {`${image_webp[0].url}`} type = "image/webp" />
