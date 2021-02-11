@@ -13,24 +13,24 @@ export default async (req, res) => {
       line_items: [
         {
           price_data: {
-            currency: 'eur',
+            currency: 'usd',
             product_data: {
-              name: product,
+              name: 'T-shirt',
             },
-            unit_amount: price,
+            unit_amount: 2000,
           },
           quantity: 1,
         },
       ],
-      success_url: 'http://localhost:3000/checkoutOK?id={CHECKOUT_SESSION_ID}',
-      cancel_url: 'http://localhost:3000/checkoutKO',
-      mode: 'payment',   
+      mode: 'payment',
+      success_url: `${req.headers.origin}/checkoutOK?id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin}/checkoutKO`,
     });
+    console.log('session : ', session);
     res.json({ id: session.id });
-    return;
   } catch (e) {
     console.log('problem with the session')
-    res.json({ error : { message: e}})
+    res.json({ error : { message: e }})
     return;
   }
 }

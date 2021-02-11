@@ -37,11 +37,15 @@ const StripeButton = (props) => {
                 })
             })
             .then(res => res.json())
-
-        await stripe.redirectToCheckout({
-            sessionId: session.id
-        })
-
+            .then((session) => {
+              return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+            .then(function( result ) {
+              console.log(result);
+            })
+            .catch(function(error) {
+              console.error('Error : ', error);
+            })
         setWorking(false)
     }
 
