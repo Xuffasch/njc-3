@@ -1,0 +1,7 @@
+.pageTitle {
+    @apply bg-gray-700 text-blue-300 text-center text-2xl py-4 px-2
+}
+
+.link {
+    @apply inline-block p-2 my-2 bg-yellow-400
+}

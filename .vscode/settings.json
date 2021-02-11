@@ -1,0 +1,4 @@
+{
+  // Disable CSS linting in VSCode after tailwindcss install
+  "css.validate": false
+}
