@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "airtable": "^0.10.1",
     "autoprefix": "^1.0.1",
     "next": "^10.0.5",
     "postcss": "^8.2.6",
