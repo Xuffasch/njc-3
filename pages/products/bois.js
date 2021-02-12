@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { getJouets } from '../../lib/airtable';
 import { getStripe } from '../../utils/get-stripe';
 
-import s from './bois.module.css';
+import s from '../../styles/Bois.module.css';
 
 export const getStaticProps = async (context) => {
     const allBois = await getJouets('Bois');
@@ -84,14 +84,14 @@ export default function Bois({ bois }) {
                             {/* <button className='p-2 my-2 rounded-lg bg-white text-xl font-bold text-blue-900'>Acheter</button> */}
                             <StripeButton produit={p.jouet} prix={p.prix} />
                         </span> 
-                        <picture>
+                        {/* <picture>
                             <source srcSet = {`${image_webp[0].url}`} type = "image/webp" />
                             <img crossOrigin = 'anonymous'
                                 src = { `${image[0].url}` }
                                 alt = { `${p.jouet}` }
                                 width = "190"
                                 height = "190" />
-                        </picture> 
+                        </picture>  */}
                     	</li>
 										)	
                   })
