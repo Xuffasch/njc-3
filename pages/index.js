@@ -2,6 +2,15 @@ import Head from 'next/head'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
+const updateCatalog = async () => {
+  const deployment = await fetch('https://api.vercel.com/v1/integrations/deploy/prj_sCH2rveCPFwEUAHm7VQYYasEVVhg/rfrEdSIhRf', {
+    method: 'POST',
+  })
+  .then(res => res.json());
+
+  console.log('deployment info : ', deployment);
+}
+
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -22,35 +31,12 @@ export default function Home() {
 
         <Link href='/products/bois'><a className='p-4 text-yellow-400 border-gray-400 bg-blue-400'>Les Jouets en bois</a></Link>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+        <button className={styles.deploy} onClick={updateCatalog}>Mise à jour catalogue</button>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+        <Link href='/admin/newProduct'>
+          <a className='p-2 m-2 rounded-2xl text-white text-2xl bg-red-400'>Ajouter Produit</a>
+        </Link> 
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
       </main>
 
       <footer className={styles.footer}>
