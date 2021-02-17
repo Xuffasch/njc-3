@@ -63,7 +63,7 @@ export default function NewProduct() {
       }
     }, false)
 
-    video.addEventListener('click', changeFacing);
+    // video.addEventListener('click', changeFacing);
   }
 
   function clearphoto() {
@@ -175,7 +175,7 @@ export default function NewProduct() {
         </Link>
         <div className='flex flex-col items-center'>
           <div className='camera'>
-            <video id='video'>Video stream not available</video>
+            <video id='video' onClick={changeFacing}>Video stream not available</video>
           </div>
           <canvas id='canvas' className={s.canvas}>
           </canvas>
