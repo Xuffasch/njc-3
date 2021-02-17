@@ -22,6 +22,20 @@ export default function NewProduct() {
   function startup() {
     let video = document.getElementById('video');
 
+    if (navigator) {
+      console.log("Can get the navigator");
+    }
+
+    if (navigator.mediaDevices) {
+      console.log('Can list navigator media devices');
+    }
+
+    navigator.mediaDevices.enumerateDevices()
+    .then( devices => {
+      devices.forEach(d => console.log("device : ", d));
+    })
+    
+
     navigator.mediaDevices.getUserMedia({
       video: true,
       audio: false,
@@ -119,7 +133,7 @@ export default function NewProduct() {
   }
 
   useEffect(() => {
-    window.addEventListener('load', startup);
+    window.onload = startup();
   }, []);
 
   return (
