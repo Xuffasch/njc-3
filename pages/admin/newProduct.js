@@ -12,12 +12,13 @@ const useMemory = () => {
   const [streaming, setStreaming] = useState(false);
   const [images, setImages] = useState([]);
   const [name, setName] = useState("Nom Produit");
+  const [facingMode, setFacingMode] = useState('environment');
 
-  return { width, setWidth, height, setHeight, streaming, setStreaming, images, setImages, name, setName }
+  return { width, setWidth, height, setHeight, streaming, setStreaming, images, setImages, name, setName, facingMode, setFacingMode }
 }
 
 export default function NewProduct() {
-  const { width, setWidth, height, setHeight, streaming, setStreaming, images, setImages, name, setName } = useMemory();
+  const { width, setWidth, height, setHeight, streaming, setStreaming, images, setImages, name, setName, facingMode, setFacingMode } = useMemory();
 
   function startup() {
     let video = document.getElementById('video');
@@ -40,7 +41,7 @@ export default function NewProduct() {
 
     console.log('userAgent : ', navigator.userAgent);
 
-    let isMobileDevice = !!(/Android|webOS|iPhone|iPad|iPod|BB10|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(navigator.userAgent || ''));
+    let isMobileDevice = !!(/Android|webOS|iPhone|iPad|iPod|BB10|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(window.navigator.userAgent || ''));
 
     console.log('Mobile device ? ', isMobileDevice);
 
@@ -64,31 +65,32 @@ export default function NewProduct() {
       }
     }, false)
 
-    if (isMobileDevice) {
-      video.addEventListener('click', function() {
-        if (facingMode == "user") {
-          facingMode = 'environment';
-        } else {
-          facingMode = 'user';
-        }
 
-        constraints = {
-          audio: false,
-          video: {
-            facingMode: facingMode
-          }
-        }
-
-        navigator.mediaDevices.getUserMedia(streamConstraints)
-        .then( stream => video.srcObject = stream )
-      })
-    }
+    
 
   }
 
   function clearphoto() {
     setImages([]);
   }
+
+  const changeFacing = useCallback( (e) => {
+    let isMobileDevice = !!(/Android|webOS|iPhone|iPad|iPod|BB10|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(window.navigator.userAgent || ''));
+
+    if (isMobileDevice) {
+      let streamConstraints = {
+        video: {
+          facingMode: facingMode == 'environment' ? 'user' : 'environment',
+        }
+      }
+
+      window.navigator.getUserMedia(streamConstraints)
+      .then( stream => e.target.srcObject = stream);
+
+      setFacingMode(facingMode == 'environment' ? 'user' : 'environment');
+    }
+
+  }, [facingMode])
 
   const takeCapture = useCallback( () => {
     console.log("current name : ", name);
@@ -169,7 +171,7 @@ export default function NewProduct() {
         </Link>
         <div className='flex flex-col items-center'>
           <div className='camera'>
-            <video id='video'>Video stream not available</video>
+            <video id='video' onClick={changeFacing}>Video stream not available</video>
 
           </div>
           <canvas id='canvas' className={s.canvas}>
