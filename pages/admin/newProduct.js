@@ -43,8 +43,6 @@ export default function NewProduct() {
 
     let isMobileDevice = !!(/Android|webOS|iPhone|iPad|iPod|BB10|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(window.navigator.userAgent || ''));
 
-    console.log('Mobile device ? ', isMobileDevice);
-
     let streamConstraints = {
       video: {
         facingMode: isMobileDevice ? 'environment' : 'user',
@@ -65,9 +63,7 @@ export default function NewProduct() {
       }
     }, false)
 
-
-    
-
+    video.addEventListener('click', changeFacing);
   }
 
   function clearphoto() {
@@ -77,11 +73,13 @@ export default function NewProduct() {
   const changeFacing = useCallback( (e) => {
     console.log('changeFacing is called');
     let isMobileDevice = !!(/Android|webOS|iPhone|iPad|iPod|BB10|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(window.navigator.userAgent || ''));
+    console.log()
     console.log('current Facing mode : ', facingMode);
     let newFacingMode = facingMode == 'environment' ? 'user' : 'environment'
     console.log('new Facing mode : ', newFacingMode);
 
     if (isMobileDevice) {
+      console.log('will stream camera')
       let streamConstraints = {
         video: {
           facingMode: newFacingMode,
@@ -91,7 +89,8 @@ export default function NewProduct() {
       window.navigator.getUserMedia(streamConstraints)
       .then( function(stream) {
         console.log('new stream is received ');
-        e.target.srcObject = stream;
+        // let video = document.getElementById('video');
+        e.target.srcObject = stream
       });
 
       setFacingMode(facingMode == 'environment' ? 'user' : 'environment');
@@ -178,7 +177,7 @@ export default function NewProduct() {
         </Link>
         <div className='flex flex-col items-center'>
           <div className='camera'>
-            <video id='video' onClick={changeFacing}>Video stream not available</video>
+            <video id='video'>Video stream not available</video>
 
           </div>
           <canvas id='canvas' className={s.canvas}>
