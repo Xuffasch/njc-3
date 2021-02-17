@@ -63,7 +63,30 @@ export default function NewProduct() {
       }
     }, false)
 
-    video.addEventListener('click', changeFacing);
+    video.addEventListener('click', e => {
+      console.log('Video is answering to click event');
+      console.log('current Facing mode : ', facingMode);
+      let newFacingMode = facingMode == 'environment' ? 'user' : 'environment'
+      console.log('new Facing mode : ', newFacingMode);
+
+      if (isMobileDevice) {
+        console.log('will stream camera')
+        let streamConstraints = {
+          video: {
+            facingMode: newFacingMode,
+          }
+        }
+  
+        window.navigator.getUserMedia(streamConstraints)
+        .then( function(stream) {
+          console.log('new stream is received ');
+          let video = document.getElementById('video');
+          video.target.srcObject = stream;
+        });
+  
+        setFacingMode(facingMode == 'environment' ? 'user' : 'environment');
+      }
+    });
   }
 
   function clearphoto() {
@@ -89,8 +112,8 @@ export default function NewProduct() {
       window.navigator.getUserMedia(streamConstraints)
       .then( function(stream) {
         console.log('new stream is received ');
-        // let video = document.getElementById('video');
-        e.target.srcObject = stream
+        let video = document.getElementById('video');
+        video.target.srcObject = stream;
       });
 
       setFacingMode(facingMode == 'environment' ? 'user' : 'environment');
@@ -178,7 +201,6 @@ export default function NewProduct() {
         <div className='flex flex-col items-center'>
           <div className='camera'>
             <video id='video'>Video stream not available</video>
-
           </div>
           <canvas id='canvas' className={s.canvas}>
           </canvas>
