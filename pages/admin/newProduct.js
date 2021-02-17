@@ -21,6 +21,7 @@ export default function NewProduct() {
 
   function startup() {
     let video = document.getElementById('video');
+    video.setAttribute('autoplay', '');
 
     if (navigator) {
       console.log("Can get the navigator");
@@ -42,7 +43,7 @@ export default function NewProduct() {
     })
     .then( stream => {
       video.srcObject = stream;
-      video.play();
+      // video.play();
     })
     .catch( err => {
       console.log("An error occured while getting media : ", err);
