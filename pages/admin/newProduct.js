@@ -75,17 +75,24 @@ export default function NewProduct() {
   }
 
   const changeFacing = useCallback( (e) => {
+    console.log('changeFacing is called');
     let isMobileDevice = !!(/Android|webOS|iPhone|iPad|iPod|BB10|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(window.navigator.userAgent || ''));
+    console.log('current Facing mode : ', facingMode);
+    let newFacingMode = facingMode == 'environment' ? 'user' : 'environment'
+    console.log('new Facing mode : ', newFacingMode);
 
     if (isMobileDevice) {
       let streamConstraints = {
         video: {
-          facingMode: facingMode == 'environment' ? 'user' : 'environment',
+          facingMode: newFacingMode,
         }
       }
 
       window.navigator.getUserMedia(streamConstraints)
-      .then( stream => e.target.srcObject = stream);
+      .then( function(stream) {
+        console.log('new stream is received ');
+        e.target.srcObject = stream;
+      });
 
       setFacingMode(facingMode == 'environment' ? 'user' : 'environment');
     }
