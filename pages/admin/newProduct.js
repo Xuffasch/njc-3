@@ -35,12 +35,24 @@ export default function NewProduct() {
     .then( devices => {
       devices.forEach(d => console.log("device : ", d));
     })
-    
 
-    navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: false,
-    })
+    console.log('userAgent : ', navigator.userAgent);
+
+    let isMobileDevice = !!(/Android|webOS|iPhone|iPad|iPod|BB10|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(navigator.userAgent || ''));
+
+    console.log('Mobile device ? ', isMobileDevice);
+
+    let streamConstraints = {
+      video: {
+        facingMode: isMobileDevice ? 'environment' : 'user',
+      }
+    }
+
+    // navigator.mediaDevices.getUserMedia({
+    //   video: true,
+    //   audio: false,
+    // })
+    navigator.mediaDevices.getUserMedia(streamConstraints)
     .then( stream => {
       video.srcObject = stream;
       // video.play();
