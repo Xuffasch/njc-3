@@ -22,6 +22,8 @@ export default function NewProduct() {
   function startup() {
     let video = document.getElementById('video');
     video.setAttribute('autoplay', '');
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
 
     if (navigator) {
       console.log("Can get the navigator");
@@ -67,7 +69,23 @@ export default function NewProduct() {
       }
     }, false)
 
-    // clearphoto();
+    if (isMobileDevice) {
+      video.addEventListener('click', function() {
+        if (facingMode == "user") {
+          facingMode = 'environment';
+        } else {
+          facingMode = 'user';
+        }
+
+        constraints = {
+          audio: false,
+          video: {
+            facingMode: facingMode
+          }
+        }
+      })
+    }
+
   }
 
   function clearphoto() {
