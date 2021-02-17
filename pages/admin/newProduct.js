@@ -50,14 +50,9 @@ export default function NewProduct() {
       }
     }
 
-    // navigator.mediaDevices.getUserMedia({
-    //   video: true,
-    //   audio: false,
-    // })
     navigator.mediaDevices.getUserMedia(streamConstraints)
     .then( stream => {
       video.srcObject = stream;
-      // video.play();
     })
     .catch( err => {
       console.log("An error occured while getting media : ", err);
@@ -83,20 +78,15 @@ export default function NewProduct() {
             facingMode: facingMode
           }
         }
+
+        navigator.mediaDevices.getUserMedia(streamConstraints)
+        .then( stream => video.srcObject = stream )
       })
     }
 
   }
 
   function clearphoto() {
-    // let canvas = document.getElementById('canvas');
-    // let context = canvas.getContext('2d');
-    // context.fillStyle = '#AAA';
-    // context.fillRect(0, 0, canvas.width, canvas.height);
-
-    // var data = canvas.toDataURL('image/png');
-    // let photo = document.getElementById('photo');
-    // photo.setAttribute('src', data);
     setImages([]);
   }
 
@@ -130,9 +120,6 @@ export default function NewProduct() {
 
       var data = canvas.toDataURL('image/png');
       setImages(prev => [...prev, {id: uuidv4(), data: data, selected: false, name: name }]);
-
-      // let photo = document.getElementById('photo');
-      // photo.setAttribute('src', data);
     } else {
       clearphoto();
     }
