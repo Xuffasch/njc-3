@@ -51,10 +51,10 @@ const StripeButton = (props) => {
 
     return ( 
         <button type='button'
-        	className='p-2 m-2'
+        	className={s.buy}
         	onClick = { handleClick }
         	disabled = { working }> 
-					{ working ? 'Connecting' : `Buy for ${props.prix}` } 
+					{ working ? 'Connecting' : `Acheter ${props.prix} €` } 
         </button>
     )
 
@@ -77,22 +77,23 @@ export default function Bois({ bois }) {
                     let image = p.images.filter(i => i.filename.indexOf(".webp") === -1);
                     let image_webp = p.images.filter(i => i.filename.indexOf(".webp") !== -1);
                     return (
-											<li key={p.id} className='pb-2 px-2 my-2 ml-2 border-separate bg-yellow-400 rounded-md flex flex-col items-center w-4/6 md:w-2/6'>
-                        <h2 className='w-full text-xl'>{ p.jouet }</h2> 
-                        <span className='w-full flex justify-around items-center'>
-                            <h2 className='text-xl'>{ `${p.prix}` }</h2> 
+					<li key={p.id} className='p-2 my-2 ml-2 bg-blue-300 rounded-md flex flex-col items-center w-4/6 md:w-2/6'>
+                        <h2 className='w-full mb-2 text-xl text-blue-800 text-center'>{ p.jouet }</h2> 
+                        <span className='w-full flex justify-center items-center'>
+                            {/* <h2 className='text-xl mr-4'>{ `${p.prix} €` }</h2>  */}
                             {/* <button className='p-2 my-2 rounded-lg bg-white text-xl font-bold text-blue-900'>Acheter</button> */}
-                            <StripeButton produit={p.jouet} prix={p.prix} />
+                            <StripeButton produit={p.jouet} prix={`${p.prix}`} />
                         </span> 
-                        {/* <picture>
+                        <picture>
                             <source srcSet = {`${image_webp[0].url}`} type = "image/webp" />
                             <img crossOrigin = 'anonymous'
                                 src = { `${image[0].url}` }
                                 alt = { `${p.jouet}` }
                                 width = "190"
-                                height = "190" />
-                        </picture>  */}
-                    	</li>
+                                height = "190"
+                                className={s.photo} />
+                        </picture> 
+                    </li>
 										)	
                   })
                 }

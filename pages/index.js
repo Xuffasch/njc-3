@@ -21,20 +21,15 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Nouveaux Jouets de Clichy
         </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+        <Link href='/products/bois'><a className={styles.catalog}>Les Jouets en bois</a></Link>
 
-        <Link href='/products/bois'><a className='p-4 text-yellow-400 border-gray-400 bg-blue-400'>Les Jouets en bois</a></Link>
-
-        <button className={styles.deploy} onClick={updateCatalog}>Mise à jour catalogue</button>
+        {/* <button className={styles.deploy} onClick={updateCatalog}>Mise à jour catalogue</button> */}
 
         <Link href='/admin/newProduct'>
-          <a className='p-2 m-2 rounded-2xl text-white text-2xl bg-red-400'>Ajouter Produit</a>
+          <a className={styles.addProduct}>Ajouter Produit</a>
         </Link> 
 
       </main>

@@ -123,3 +123,15 @@
 .deploy {
     @apply p-2 m-2 bg-green-700 rounded-xl text-3xl text-white;
 }
+
+.actionbutton {
+    @apply p-2 m-8 text-white rounded-xl;
+}
+
+.catalog {
+    @apply actionbutton bg-blue-700 text-2xl;
+}
+
+.addProduct {
+    @apply actionbutton bg-red-400 text-2xl;
+}
