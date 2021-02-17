@@ -63,30 +63,7 @@ export default function NewProduct() {
       }
     }, false)
 
-    video.addEventListener('click', e => {
-      console.log('Video is answering to click event');
-      console.log('current Facing mode : ', facingMode);
-      let newFacingMode = facingMode == 'environment' ? 'user' : 'environment'
-      console.log('new Facing mode : ', newFacingMode);
-
-      if (isMobileDevice) {
-        console.log('will stream camera')
-        let streamConstraints = {
-          video: {
-            facingMode: newFacingMode,
-          }
-        }
-  
-        window.navigator.getUserMedia(streamConstraints)
-        .then( function(stream) {
-          console.log('new stream is received ');
-          let video = document.getElementById('video');
-          video.target.srcObject = stream;
-        });
-  
-        setFacingMode(facingMode == 'environment' ? 'user' : 'environment');
-      }
-    });
+    video.addEventListener('click', changeFacing);
   }
 
   function clearphoto() {
@@ -96,7 +73,6 @@ export default function NewProduct() {
   const changeFacing = useCallback( (e) => {
     console.log('changeFacing is called');
     let isMobileDevice = !!(/Android|webOS|iPhone|iPad|iPod|BB10|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(window.navigator.userAgent || ''));
-    console.log()
     console.log('current Facing mode : ', facingMode);
     let newFacingMode = facingMode == 'environment' ? 'user' : 'environment'
     console.log('new Facing mode : ', newFacingMode);
@@ -109,11 +85,10 @@ export default function NewProduct() {
         }
       }
 
-      window.navigator.getUserMedia(streamConstraints)
+      window.navigator.mediaDevices.getUserMedia(streamConstraints)
       .then( function(stream) {
         console.log('new stream is received ');
-        let video = document.getElementById('video');
-        video.target.srcObject = stream;
+        e.target.srcObject = stream;
       });
 
       setFacingMode(facingMode == 'environment' ? 'user' : 'environment');
